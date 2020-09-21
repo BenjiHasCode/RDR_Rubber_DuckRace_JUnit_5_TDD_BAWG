@@ -7,16 +7,18 @@ public class Race {
     private int iteration;
 
     public Race(){
+        //we fill our list with ten queues
         queues = new ArrayList<>();
         for(int i = 0; i < 10; i++){
             queues.add(new Queue());
         }
+        //the next list only needs to have 9 queues
         nextQueues = new ArrayList<>();
         for(int i = 0; i < queues.size()-1; i++){
             nextQueues.add(new Queue());
         }
         iteration = 1;
-        //fill queues
+        //during the first iteration we just fill the queues
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 queues.get(i).add(new Duck(j + 1 + i * 10));
@@ -37,6 +39,7 @@ public class Race {
     }
 
     public void iteration(){
+        //10 - iteration + 1 = 10 - 2 + 1 = 9. So iteration 2 will run 81 times
         for(int i = 0; i < (10 - iteration + 1) * (10 - iteration + 1); i++){
             removeAndPlace();
         }
@@ -64,6 +67,7 @@ public class Race {
         }
 
         boolean placed = false;
+        //we loop until we've placed the duck in a list (that isn't already "full")
         while (!placed){
             int nextQueue = random.nextInt(10 - iteration + 1);
             //Check that it isn't full
@@ -87,17 +91,19 @@ public class Race {
     }
 
     public void iteration(int cheatNumber){
+        //we search for our cheatNumber and we remove that as the first one
         for (Queue queue : queues) {
             for (int j = 0; j < queue.size(); j++) {
                 if (queue.get(j).getNumber() == cheatNumber) {
                     for (int l = 0; l < j; l++) {
-                        queue.remove();
+                        queue.remove(); //since we remove index 0, we need to remove all the numbers before our cheat number
                     }
                     Duck duck = queue.remove();
                     nextQueues.get(0).add(duck);
                 }
             }
         }
+        //we remove from random queues and add to random queues in the next list
         for(int i = 0; i < (10 - iteration + 1) * (10 - iteration + 1) - 1; i++){
             removeAndPlace();
         }
@@ -111,7 +117,7 @@ public class Race {
     public String toString(){
         String s = "";
         for(Queue q : queues) {
-            s += q.toString();
+            s += q.toString() + "\n";
         }
         return s;
     }

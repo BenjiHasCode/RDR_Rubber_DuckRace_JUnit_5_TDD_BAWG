@@ -30,7 +30,7 @@ public class Queue {
             for(int i = 1; i < queue.size(); i++){
                 s += "," + queue.get(i).toString();
             }
-            s += "]\n";
+            s += "]";
         }
 
 
